@@ -3,17 +3,17 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.types import Functor
-from monad.types import Identity
-from monad.types import Maybe
-from monad.types import Left, Right
-from monad.types import List
+from smonad.types import Functor
+from smonad.types import Identity
+from smonad.types import Maybe
+from smonad.types import Failure, Success
+from smonad.types import List
 
 testee = [
     Identity,
     Maybe,
-    Left,
-    Right,
+    Failure,
+    Success,
     List,
 ]
 test_range = range(-100, 100)

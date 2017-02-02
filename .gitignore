@@ -33,4 +33,6 @@ MANIFEST
 *.zip
 
 *.deb
+
+.pypirc
 *.rpm

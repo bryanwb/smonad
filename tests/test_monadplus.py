@@ -3,9 +3,9 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.types import MonadPlus
-from monad.types import Maybe
-from monad.types import List
+from smonad.types import MonadPlus
+from smonad.types import Maybe
+from smonad.types import List
 
 testee = [
     Maybe,

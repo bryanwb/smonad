@@ -1,6 +1,6 @@
 Applicative Functor
 ===================
 
-.. automodule:: monad.types.applicative
+.. automodule:: smonad.types.applicative
    :members:
    :show-inheritance:

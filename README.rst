@@ -1,6 +1,6 @@
-===================================
-monad - a functional python package
-===================================
+======================================================================
+smonad - a functional python package with some scala inspiration
+======================================================================
 
 
 Introduction
@@ -12,13 +12,18 @@ What?
 
 Monads in python, with some helpful functions.
 
+This package is a fork of Philip Xu's excellent `monad package <https://github.com/pyx/monad>`_.
+Philip's package has been modified to be more approachable for Python developers. It
+takes some inspiration from the excellent `lambda <https://github.com/palatable/lambda>`_ library
+for Java and Scala's `Try monad <http://danielwestheide.com/blog/2012/12/26/the-neophytes-guide-to-scala-part-6-error-handling-with-try.html>`_
+
 
 How?
 ----
 
 ::
 
-  >>> from monad.decorators import maybe
+  >>> from smonad.decorators import maybe
   >>> parse_int = maybe(int)
   >>> parse_int(42)
   Just(42)
@@ -31,7 +36,7 @@ How?
   >>> parse_float('42.2')
   Just(42.2)
 
-  >>> from monad.actions import tryout
+  >>> from smonad.actions import tryout
   >>> parse_number = tryout(parse_int, parse_float)
   >>> tokens = [2, '0', '4', 'eight', '10.0']
   >>> [parse_number(token) for token in tokens]
@@ -75,7 +80,7 @@ Installation
 
 Install from PyPI::
 
-  pip install monad
+  pip install smonad
 
 Install from source, download source package, decompress, then ``cd`` into source directory, run::
 
@@ -92,16 +97,13 @@ Links
 =====
 
 Documentation:
-  http://monad.readthedocs.org/
+  http://smonad.readthedocs.org/
 
 Issue Tracker:
-  https://bitbucket.org/pyx/monad/issues/
+  https://github.com/bryanwb/smonad/issues/
 
 Source Package @ PyPI:
-  https://pypi.python.org/pypi/monad/
-
-Mercurial Repository @ bitbucket:
-  https://bitbucket.org/pyx/monad/
+  https://pypi.python.org/pypi/smonad/
 
 Git Repository @ Github:
-  https://github.com/pyx/monad/
+  https://github.com/bryanwb/smonad/

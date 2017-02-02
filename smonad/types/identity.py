@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-"""monad.types.identity - The Identity Monad."""
+"""smonad.types.identity - The Identity Monad."""
 
 from . import Monad
 from ..mixins import ContextManager, Ord

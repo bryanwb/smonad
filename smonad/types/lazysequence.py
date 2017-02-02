@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-"""monad.types.lazysequence - a sequence type with lazy evaluation."""
+"""smonad.types.lazysequence - a sequence type with lazy evaluation."""
 
 from collections import Sequence
 from functools import total_ordering

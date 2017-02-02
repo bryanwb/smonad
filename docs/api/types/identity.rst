@@ -1,6 +1,6 @@
 The Identity Monad
 ==================
 
-.. automodule:: monad.types.identity
+.. automodule:: smonad.types.identity
    :members:
    :show-inheritance:

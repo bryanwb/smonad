@@ -1,6 +1,6 @@
 Common Mixin Classes
 ====================
 
-.. automodule:: monad.mixins
+.. automodule:: smonad.mixins
    :members:
    :show-inheritance:

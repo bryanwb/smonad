@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-from monad.types import Null
+from smonad.types import Null
 
 
 def test_null_repr():

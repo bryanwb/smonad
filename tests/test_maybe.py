@@ -3,10 +3,10 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.actions import first
-from monad.decorators import maybe
-from monad.exceptions import ExtractError
-from monad.types import Maybe, Just, Nothing
+from smonad.actions import first
+from smonad.decorators import maybe
+from smonad.exceptions import ExtractError
+from smonad.types import Maybe, Just, Nothing
 
 test_range = range(-100, 100)
 unit = Maybe.unit

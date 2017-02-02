@@ -1,49 +1,51 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-"""monad.actions - useful monadic actions."""
+"""smonad.actions - useful monadic actions."""
 
 from .decorators import function, monadic
-from .types import Either, Left, Right
+from .types import Try, Failure, Success
 from .types import Just, Nothing
 from .utils import identity
 
 
 @function
-def either(left_handler, right_handler=identity):
-    """Case analysis for ``Either``.
+def ftry(failure_handler, success_handler=identity):
+    """Case analysis for ``Try``.
 
-    Returns a function that when called with a value of type ``Either``,
-    applies either ``left_handler`` or ``right_handler`` to that value
+    This function is named ftry instead of try to avoid collision with the ``try`` keyword.
+
+    Returns a function that when called with a value of type ``Try``,
+    applies either ``failure_handler`` or ``success_handler`` to that value
     depending on the type of it.  If an incompatible value is passed, a
     ``TypeError`` will be raised.
 
     >>> def log(v):
-    ...     print('Got Left({})'.format(v))
-    >>> logger = either(left_handler=log)
-    >>> logger(Left(1))
-    Got Left(1)
-    >>> logger(Right(1))
+    ...     print('Got Failure({})'.format(v))
+    >>> logger = ftry(failure_handler=log)
+    >>> logger(Failure(1))
+    Got Failure(1)
+    >>> logger(Success(1))
     1
     >>> def inc(v):
     ...     return v + 1
-    >>> act = either(log, inc)
-    >>> [act(v) for v in (Left(0), Right(1), Left(2), Right(3))]
-    Got Left(0)
-    Got Left(2)
+    >>> act = ftry(log, inc)
+    >>> [act(v) for v in (Failure(0), Success(1), Failure(2), Success(3))]
+    Got Failure(0)
+    Got Failure(2)
     [None, 2, None, 4]
     """
     @function
-    def analysis(an_either):
+    def analysis(a_try):
         """Apply handler functions based on value."""
-        aug_type = type(an_either)
-        if not issubclass(aug_type, Either):
+        aug_type = type(a_try)
+        if not issubclass(aug_type, Try):
             raise TypeError(
                 'applied either on incompatible type: %s' % aug_type)
-        if issubclass(aug_type, Left):
-            return left_handler(an_either.value)
-        assert issubclass(aug_type, Right)
-        return right_handler(an_either.value)
+        if issubclass(aug_type, Failure):
+            return failure_handler(a_try.value)
+        assert issubclass(aug_type, Success)
+        return success_handler(a_try.value)
     return analysis
 
 
@@ -89,7 +91,7 @@ def first(sequence, default=Nothing, predicate=None):
     Returns ``default`` if no satisfied value in the sequence, ``default``
     defaults to :data:`Nothing`.
 
-    >>> from monad.types import Just, Nothing
+    >>> from smonad.types import Just, Nothing
     >>> first([Nothing, Nothing, Just(42), Nothing])
     Just(42)
     >>> first([Just(42), Just(43)])
@@ -137,7 +139,7 @@ def first(sequence, default=Nothing, predicate=None):
 # them, the following adds those docstring into testsuite back again,
 # explicitly.
 __test__ = {
-    'either': either.__doc__,
+    'ftry': ftry.__doc__,
     'tryout': tryout.__doc__,
     'first': first.__doc__,
 }

@@ -1,6 +1,6 @@
 Utility Functions
 =================
 
-.. automodule:: monad.utils
+.. automodule:: smonad.utils
    :members:
    :show-inheritance:

@@ -6,7 +6,7 @@ import sys
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
 sys.path.insert(0, PROJECT_DIR)
-import monad
+import smonad
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -18,11 +18,11 @@ source_suffix = '.rst'
 
 master_doc = 'index'
 
-project = u'Monad'
+project = u'smonad'
 copyright = u'2012-2014, Philip Xu'
 
-version = '%d.%d' % monad.__version__
-release = monad.VERSION
+version = '%d.%d' % smonad.__version__
+release = smonad.VERSION
 
 exclude_patterns = ['_build']
 
@@ -35,17 +35,17 @@ RTD_NEW_THEME = True
 htmlhelp_basename = 'Monaddoc'
 
 latex_documents = [
-    ('index', 'Monad.tex', u'Monad Documentation',
+    ('index', 'SMonad.tex', u'SMonad Documentation',
      u'Philip Xu', 'manual'),
 ]
 
 man_pages = [
-    ('index', 'monad', u'Monad Documentation',
+    ('index', 'smonad', u'SMonad Documentation',
      [u'Philip Xu'], 1)
 ]
 
 texinfo_documents = [
-    ('index', 'Monad', u'Monad Documentation',
-     u'Philip Xu', 'Monad', monad.__doc__,
+    ('index', 'SMonad', u'smonad Documentation',
+     u'Philip Xu', 'SMonad', smonad.__doc__,
      'Miscellaneous'),
 ]

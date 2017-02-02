@@ -2,7 +2,7 @@
 API Reference
 =============
 
-.. automodule:: monad
+.. automodule:: smonad
 
 .. toctree::
    :maxdepth: 2

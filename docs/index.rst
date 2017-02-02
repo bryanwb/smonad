@@ -1,4 +1,4 @@
-Welcome to Monad's documentation!
+Welcome to smonad's documentation!
 =================================
 
 Contents:

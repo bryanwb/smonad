@@ -1,6 +1,6 @@
 Decorators
 ==========
 
-.. automodule:: monad.decorators
+.. automodule:: smonad.decorators
    :members:
    :show-inheritance:

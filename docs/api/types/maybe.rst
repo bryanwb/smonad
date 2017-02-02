@@ -1,6 +1,6 @@
 The Maybe Monad
 ===============
 
-.. automodule:: monad.types.maybe
+.. automodule:: smonad.types.maybe
    :members:
    :show-inheritance:

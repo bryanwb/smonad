@@ -3,8 +3,8 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.decorators import producer
-from monad.types import List
+from smonad.decorators import producer
+from smonad.types import List
 
 test_range = range(-100, 100)
 unit = List.unit

@@ -3,7 +3,7 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.utils import compose, identity, suppress
+from smonad.utils import compose, identity, suppress
 
 
 def test_compose():

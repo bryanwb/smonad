@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-from monad.types import Identity
-from monad.types import Maybe
-from monad.types import Either
-from monad.types import List
+from smonad.types import Identity
+from smonad.types import Maybe
+from smonad.types import Try
+from smonad.types import List
 
 testee = [
     Identity,
     Maybe,
-    Either,
+    Try,
     List,
 ]
 test_range = range(-100, 100)

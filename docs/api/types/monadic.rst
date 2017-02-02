@@ -1,6 +1,6 @@
 Monadic Function
 ================
 
-.. automodule:: monad.types.monadic
+.. automodule:: smonad.types.monadic
    :members:
    :show-inheritance:

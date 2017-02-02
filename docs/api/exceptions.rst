@@ -1,6 +1,6 @@
 Exceptions
 ==========
 
-.. automodule:: monad.exceptions
+.. automodule:: smonad.exceptions
    :members:
    :show-inheritance:

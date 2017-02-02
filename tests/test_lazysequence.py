@@ -5,7 +5,7 @@ from itertools import count
 
 import pytest
 
-from monad.types import LazySequence
+from smonad.types import LazySequence
 
 
 def test_lazy_sequence_initialization():

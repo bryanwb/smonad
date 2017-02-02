@@ -1,6 +1,6 @@
 Function
 ========
 
-.. automodule:: monad.types.function
+.. automodule:: smonad.types.function
    :members:
    :show-inheritance:

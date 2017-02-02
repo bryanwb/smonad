@@ -1,6 +1,6 @@
 Lazy Sequence
 =============
 
-.. automodule:: monad.types.lazysequence
+.. automodule:: smonad.types.lazysequence
    :members:
    :show-inheritance:

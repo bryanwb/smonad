@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-"""monad.types - types"""
+"""smonad.types - types"""
 
 from .null import Null
 from .lazysequence import LazySequence
@@ -13,7 +13,7 @@ from .monad import Monad
 from .monadplus import MonadPlus
 from .identity import Identity
 from .maybe import Maybe, Just, Nothing
-from .either import Either, Left, Right
+from .ftry import Try, Failure, Success
 from .list import List
 
 __all__ = [
@@ -29,8 +29,8 @@ __all__ = [
     'Maybe',
     'Just',
     'Nothing',
-    'Either',
-    'Left',
-    'Right',
+    'Try',
+    'Failure',
+    'Success',
     'List',
 ]

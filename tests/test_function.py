@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-from monad.types import Function
-from monad.decorators import function
+from smonad.types import Function
+from smonad.decorators import function
 
 
 def test_callable():

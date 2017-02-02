@@ -3,15 +3,16 @@
 # License: BSD New, see LICENSE for details.
 import pytest
 
-from monad.actions import either
-from monad.decorators import failsafe
-from monad.exceptions import ExtractError
-from monad.types import Either, Left, Right
+from smonad.actions import ftry
+from smonad.decorators import failsafe
+from smonad.exceptions import ExtractError
+from smonad.types import Try, Failure, Success
+
 
 test_range = range(-100, 100)
-unit = Either.unit
+unit = Try.unit
 
-error = Left('Error')
+error = Failure('Error')
 
 
 def add_1(n):
@@ -63,43 +64,43 @@ def test_fmap_functor_laws():
         assert ft.fmap(f_g) == ft.fmap(g).fmap(f)
 
     value = 42
-    l = Left('Something wrong.')
-    r = Right(value)
+    l = Failure('Something wrong.')
+    r = Success(value)
     assert l.fmap(f) is l
-    assert r.fmap(f) == Right(f(42))
+    assert r.fmap(f) == Success(f(42))
 
 
 def test_unit():
-    assert type(unit(42)) is Right
+    assert type(unit(42)) is Success
 
 
-def test_either_is_abstract():
+def test_ftry_is_abstract():
     with pytest.raises(NotImplementedError):
-        Either(42)
+        Try(42)
 
 
 def test_compare():
     for n in test_range:
-        assert Left(n) == Left(n)
-        assert Right(n) == Right(n)
-        assert Left(n) != Right(n)
+        assert Failure(n) == Failure(n)
+        assert Success(n) == Success(n)
+        assert Failure(n) != Success(n)
 
 
 def test_ordering():
     with pytest.raises(TypeError):
-        Left(1) < 1
+        Failure(1) < 1
 
     with pytest.raises(TypeError):
-        Right(1) < 1
+        Success(1) < 1
 
     for n in test_range:
-        assert (Left(n) < Left(n)) is False
-        assert Left(n) > Left(n - 1)
-        assert Left(n) < Left(n + 1)
-        assert (Right(n) < Right(n)) is False
-        assert Right(n) > Right(n - 1)
-        assert Right(n) < Right(n + 1)
-        assert Left(n) < Right(n)
+        assert (Failure(n) < Failure(n)) is False
+        assert Failure(n) > Failure(n - 1)
+        assert Failure(n) < Failure(n + 1)
+        assert (Success(n) < Success(n)) is False
+        assert Success(n) > Success(n - 1)
+        assert Success(n) < Success(n + 1)
+        assert Failure(n) < Success(n)
 
 
 def test_as_context_manager():
@@ -124,11 +125,11 @@ def test_as_context_manager():
 
 
 def test_bool():
-    assert bool(Left(True)) is False
-    assert bool(Right(False)) is True
+    assert bool(Failure(True)) is False
+    assert bool(Success(False)) is True
     for n in test_range:
-        assert bool(Left(n)) is False
-        assert bool(Right(n)) is True
+        assert bool(Failure(n)) is False
+        assert bool(Success(n)) is True
         assert bool(unit(n)) is True
 
 
@@ -190,24 +191,24 @@ def test_monad_law_associativity():
         assert m >> (lambda x: k(x) >> h) == (m >> k) >> h
 
 
-def test_either_action():
+def test_ftry_action():
     inc = lambda n: n + 1
     dec = lambda n: n - 1
 
-    act = either(inc)
-    assert act(Left(1)) == 2
-    assert act(Right(1)) == 1
+    act = ftry(inc)
+    assert act(Failure(1)) == 2
+    assert act(Success(1)) == 1
 
-    act = either(left_handler=inc, right_handler=dec)
-    assert act(Left(1)) == 2
-    assert act(Right(1)) == 0
+    act = ftry(failure_handler=inc, success_handler=dec)
+    assert act(Failure(1)) == 2
+    assert act(Success(1)) == 0
 
 
-def test_either_action_with_incompatible_type():
+def test_ftry_action_with_incompatible_type():
     inc = lambda n: n + 1
 
-    act = either(inc)
-    assert act(Left(1)) == 2
+    act = ftry(inc)
+    assert act(Failure(1)) == 2
 
     with pytest.raises(TypeError):
         act(1)
@@ -219,22 +220,22 @@ def test_failsafe_decorator():
         return a / b
 
     assert div(42, 21) == unit(2)
-    assert isinstance(div(42, 0), Left)
+    assert isinstance(div(42, 0), Failure)
 
 
 def test_failsafe_decorator_catch_extract_error():
-    @failsafe(left_on_exception=None)
+    @failsafe(failure_on_exception=None)
     def wrong():
         with fail(1) as result:
             assert result is False  # should not reach here
 
     assert wrong() == error
 
-    @failsafe(left_on_exception=None)
+    @failsafe(failure_on_exception=None)
     def wrong():
         raise ExtractError('not a left')
 
-    assert isinstance(wrong(), Left)
+    assert isinstance(wrong(), Failure)
 
 
 def test_failsafe_decorator_with_predicate():
@@ -243,15 +244,15 @@ def test_failsafe_decorator_with_predicate():
         return x
 
     assert truth(42) == unit(42)
-    assert truth(None) == Left(None)
+    assert truth(None) == Failure(None)
     assert add_1(0) >> truth == unit(1)
-    assert add_1(-1) >> truth == Left(0)
-    assert truth(False) >> double == Left(False)
+    assert add_1(-1) >> truth == Failure(0)
+    assert truth(False) >> double == Failure(False)
     assert double([]) >> truth == error
 
 
 def test_failsafe_decorator_with_value():
-    @failsafe(left_on_value=None)
+    @failsafe(failure_on_value=None)
     def truth(x):
         return x
 
@@ -259,28 +260,28 @@ def test_failsafe_decorator_with_value():
     assert truth('') == unit('')
     assert truth(0) == unit(0)
     assert truth(False) == unit(False)
-    assert truth(None) == Left(None)
+    assert truth(None) == Failure(None)
 
 
 def test_failsafe_decorator_combined():
-    @failsafe(predicate=bool, left_on_value=42)
+    @failsafe(predicate=bool, failure_on_value=42)
     def wrap(x):
         return x
 
-    assert wrap(True) == Right(True)
-    assert wrap(False) == Left(False)
-    assert wrap('something') == Right('something')
-    assert wrap('') == Left('')
-    assert wrap([False]) == Right([False])
-    assert wrap([]) == Left([])
-    assert wrap(1) == Right(1)
-    assert wrap(0) == Left(0)
-    assert wrap(None) == Left(None)
-    assert wrap(42) == Left(42)
+    assert wrap(True) == Success(True)
+    assert wrap(False) == Failure(False)
+    assert wrap('something') == Success('something')
+    assert wrap('') == Failure('')
+    assert wrap([False]) == Success([False])
+    assert wrap([]) == Failure([])
+    assert wrap(1) == Success(1)
+    assert wrap(0) == Failure(0)
+    assert wrap(None) == Failure(None)
+    assert wrap(42) == Failure(42)
 
 
 def test_failsafe_decorator_none_exception():
-    @failsafe(left_on_exception=None)
+    @failsafe(failure_on_exception=None)
     def div(a, b):
         return a / b
 
@@ -290,7 +291,7 @@ def test_failsafe_decorator_none_exception():
 
 def test_failsafe_decorator_empty_seq_exception():
     for empty in ([], tuple(), set()):
-        @failsafe(left_on_exception=empty)
+        @failsafe(failure_on_exception=empty)
         def div(a, b):
             return a / b
 
@@ -299,19 +300,19 @@ def test_failsafe_decorator_empty_seq_exception():
 
 
 def test_failsafe_decorator_specific_exception():
-    @failsafe(left_on_exception=ZeroDivisionError)
+    @failsafe(failure_on_exception=ZeroDivisionError)
     def div(a, b):
         return a / b
 
-    assert isinstance(div(42, 0), Left)
+    assert isinstance(div(42, 0), Failure)
 
 
 def test_failsafe_decorator_specific_exception_tuple():
-    @failsafe(left_on_exception=(IOError, ZeroDivisionError))
+    @failsafe(failure_on_exception=(IOError, ZeroDivisionError))
     def div(a, b):
         if a < 0:
             raise IOError
         return a / b
 
-    assert isinstance(div(42, 0), Left)
-    assert isinstance(div(-42, 2), Left)
+    assert isinstance(div(42, 0), Failure)
+    assert isinstance(div(-42, 2), Failure)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2012-2014, Philip Xu <pyx@xrefactor.com>
 # License: BSD New, see LICENSE for details.
-"""monad.types.list - The List Monad."""
+"""smonad.types.list - The List Monad."""
 
 from collections import Sequence
 from itertools import chain

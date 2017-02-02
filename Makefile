@@ -27,7 +27,7 @@ install:
 	python setup.py install
 
 coverage:
-	py.test --cov monad --cov-report=html
+	py.test --cov smonad --cov-report=html
 
 dev-install:
 	pip install -r requirements/test.txt
@@ -60,9 +60,9 @@ tox:
 	tox
 
 quality:
-	pep8 monad
-	pyflakes monad
-	pylint monad
+	pep8 smonad
+	pyflakes smonad
+	pylint smonad
 
 clean:
 	cd $(DOCS_DIR) && $(MAKE) clean

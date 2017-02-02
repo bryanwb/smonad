@@ -1,6 +1,6 @@
 The Null Object
 ===============
 
-.. automodule:: monad.types.null
+.. automodule:: smonad.types.null
    :members:
    :show-inheritance:

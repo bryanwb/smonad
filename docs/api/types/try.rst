@@ -1,6 +1,6 @@
-The Either Monad
+The Try Monad
 ================
 
-.. automodule:: monad.types.either
+.. automodule:: smonad.types.ftry
    :members:
    :show-inheritance:

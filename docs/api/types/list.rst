@@ -1,6 +1,6 @@
 The List Monad
 ==============
 
-.. automodule:: monad.types.list
+.. automodule:: smonad.types.list
    :members:
    :show-inheritance:

@@ -1,6 +1,6 @@
 Monad Plus
 ==========
 
-.. automodule:: monad.types.monadplus
+.. automodule:: smonad.types.monadplus
    :members:
    :show-inheritance:

@@ -1,6 +1,6 @@
 Functor
 =======
 
-.. automodule:: monad.types.functor
+.. automodule:: smonad.types.functor
    :members:
    :show-inheritance:
