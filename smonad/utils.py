@@ -6,6 +6,34 @@
 from collections import Iterable
 
 
+def succeeded(obj):
+    """Return a Boolean that indicates if the value is an instance of smonad.types.ftry.Success
+
+    >>> succeeded(Success(True))
+    ... True
+    >>> succeeded(Failure('fubar'))
+    ... False
+    """
+    # import inside the function to avoid circular module dependencies
+    from smonad.types.ftry import Try, Success
+    assert isinstance(obj, Try)
+    return isinstance(obj, Success)
+
+
+def failed(obj):
+    """Return a Boolean that indicates if the value is an instance of smonad.types.ftry.Failure
+
+    >>> failed(Failure('shit is fucked up'))
+    ... True
+    >>> failed(Success('it worked!'))
+    ... False
+    """
+    # import inside the function to avoid circular module dependencies
+    from smonad.types.ftry import Try, Failure
+    assert isinstance(obj, Try)
+    return isinstance(obj, Failure)
+
+
 # cannot wait for python 3.4, also do a type-check here
 class SuppressContextManager(object):
     """Context manager class that suppress specified exceptions."""
