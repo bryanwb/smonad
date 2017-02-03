@@ -9,10 +9,11 @@ from collections import Iterable
 def succeeded(obj):
     """Return a Boolean that indicates if the value is an instance of smonad.types.ftry.Success
 
+    >>> from smonad.types.ftry import Failure, Success
     >>> succeeded(Success(True))
-    ... True
+    True
     >>> succeeded(Failure('fubar'))
-    ... False
+    False
     """
     # import inside the function to avoid circular module dependencies
     from smonad.types.ftry import Try, Success
@@ -23,10 +24,11 @@ def succeeded(obj):
 def failed(obj):
     """Return a Boolean that indicates if the value is an instance of smonad.types.ftry.Failure
 
+    >>> from smonad.types.ftry import Failure, Success
     >>> failed(Failure('shit is fucked up'))
-    ... True
+    True
     >>> failed(Success('it worked!'))
-    ... False
+    False
     """
     # import inside the function to avoid circular module dependencies
     from smonad.types.ftry import Try, Failure

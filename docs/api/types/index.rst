@@ -13,5 +13,5 @@ Types
    monadplus
    identity
    maybe
-   either
+   ftry
    list
