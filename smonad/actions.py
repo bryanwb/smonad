@@ -7,8 +7,45 @@ from .decorators import function, monadic
 from .types import Try, Failure, Success
 from .types import Just, Nothing
 from .utils import identity
+import StringIO
+import sys
+import traceback
 
 
+def _get_stacktrace():
+    t, _, tb = sys.exc_info()
+    f = StringIO.StringIO()
+    traceback.print_tb(tb, None, f)
+    stacktrace = f.getvalue()
+    return stacktrace
+
+
+def attempt(callable, exception=None):
+    """Call callable and wrap it with appropriate Failure or Success
+
+    If calling the callable raises an exception, wrap the exception in a Failure.
+    If the keyword argument ``exception`` is not None, only wrap
+    the specified exception. Raise all other exceptions.
+    The stacktrace related to the exception is added to the wrapped exception
+    as the `stractrace` property
+
+    If the calling the callable does not raise an exception, return Success 
+    wrapping the value
+    """
+    if exception is None:
+        catch_exception = Exception
+    else:
+        catch_exception = exception
+
+    try:
+        value = callable()
+        return Success(value)
+    except catch_exception as e:
+        stacktrace = _get_stacktrace()
+        e.stacktrace = stacktrace
+        return Failure(e)
+    
+    
 @function
 def ftry(failure_handler, success_handler=identity):
     """Case analysis for ``Try``.
@@ -139,6 +176,7 @@ def first(sequence, default=Nothing, predicate=None):
 # them, the following adds those docstring into testsuite back again,
 # explicitly.
 __test__ = {
+    'attempt': ftry.__doc__,
     'ftry': ftry.__doc__,
     'tryout': tryout.__doc__,
     'first': first.__doc__,

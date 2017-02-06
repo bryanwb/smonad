@@ -131,7 +131,7 @@ def failsafe(callable_object=None,
              predicate=None,
              failure_on_value=Null,
              failure_on_exception=Exception):
-    """Transform a callable into a function returns an :py:class:`Either`.
+    """Transform a callable into a function returns an :py:class:`Try`.
 
     >>> parse_int = failsafe(int)
     >>> parse_int(42)

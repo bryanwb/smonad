@@ -316,3 +316,23 @@ def test_failsafe_decorator_specific_exception_tuple():
 
     assert isinstance(div(42, 0), Failure)
     assert isinstance(div(-42, 2), Failure)
+
+
+def test_match_failure_only():
+    assert Failure(0).match(lambda v: v + 1) == 1
+    assert Success(10).match(lambda v: v + 1) == 10
+
+
+def test_match_failure_and_success():
+    assert Failure(0).match(lambda v: v + 1, lambda v: v / 2) == 1
+    assert Success(10).match(lambda v: v + 1, lambda v: v / 2) == 5
+
+
+def test_recover():
+    result = Failure(0).recover(lambda v: v + 1)
+    assert result == 1
+    
+    result = Success(10).recover(lambda v: v + 1)
+    assert isinstance(result, Success)
+    assert result.value == 10
+

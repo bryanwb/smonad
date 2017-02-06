@@ -106,6 +106,34 @@ class Try(Monad, ContextManager, Ord):
         else:
             return False
 
+    def match(self, failure_handler, right_handler=None):
+        """
+        Given two mapping functions (one from an Failure to a value, one from a Success to a
+        Value), unwrap the value stored in this Try, apply the appropriate
+        mapping function, and return the result.
+
+        If the right_handler is None and self is an instance of Success, the wrapped value is returned
+        """
+        if isinstance(self, Failure):
+            return failure_handler(self.value)
+
+        if right_handler is None:
+            return self.value
+
+        return right_handler(self.value)
+
+    def recover(self, recovery_fn):
+        """
+        "Recover" from a left value by applying a recovery_fn to the wrapped
+        value and returning it in the case of a left value; otherwise, return
+        the wrapped right value.
+        """
+        if isinstance(self, Failure):
+            return recovery_fn(self.value)
+
+        else:
+            return self
+
 
 class Failure(Try):
     """Failure of :py:class:`Try`."""
