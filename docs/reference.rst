@@ -13,3 +13,4 @@ API Reference
    api/mixins
    api/types/index
    api/utils
+   api/retry

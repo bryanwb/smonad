@@ -4,6 +4,8 @@
 """monad.utils - utility functions and values."""
 
 from collections import Iterable
+import sys
+import os
 
 
 def succeeded(obj):
@@ -102,3 +104,17 @@ def ignore_exception_set(*exceptions):
             exception = (exception,)
         to_be_ignored |= set(exception)
     return to_be_ignored
+
+
+def print_now(message, newline=True, err=False):
+    if err:
+        stream = sys.stderr
+    else:
+        stream = sys.stdout
+        
+    stream.write(message)
+
+    if newline:
+        stream.write(os.linesep)
+
+    stream.flush()

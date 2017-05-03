@@ -3,7 +3,7 @@
 # License: BSD New, see LICENSE for details.
 """smonad - a functional library"""
 
-__version__ = (0, 6)
+__version__ = (0, 7)
 
 VERSION = '%d.%d' % __version__
 

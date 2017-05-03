@@ -34,7 +34,7 @@ dev-install:
 	pip install -r requirements/doc.txt
 	pip install -e .
 
-docs: doc-html doc-pdf
+docs: doc-html
 
 doc-html: test
 	cd $(DOCS_DIR); $(MAKE) html

@@ -20,12 +20,15 @@ for Java and Scala's `Try monad <http://danielwestheide.com/blog/2012/12/26/the-
 Python developers may find the Try monad particularly useful as it allows you to treat errors
 as values.
 
-
 Why?
 ----
 
-Python does not have a good builtin conventions for processing multiple
-operations in batch. Further, this library's authors found excessive reliance
+Python does not have a good builtin conventions for the following tasks
+
+* Processing multiple operations in batch
+* Executing long running operations that require multiple retries
+
+Further, this library's authors found excessive reliance
 on classes can lead to less composable code.
 
 This library borrows some ideas from Haskell and other functional programming
@@ -159,7 +162,44 @@ to instances of Failure. It returns Success(V) unchanged.
 
       return Success("Successfully created all servers")
 
-          
+      
+Retrying with Style
+---------------------------------------------------
+
+Let's say we want to create a single server using a new Cloud computing provider named
+HighlyVariable Inc. HighlyVariable can provision our new server in a few seconds, several minutes,
+or occasionally not at all. This author has used cloud services where the "not at all" is not so
+uncommon an outcome!
+
+Let's create a `server_ready` function that returns a `Success` when the server is ready, a `Failure`
+in case of a failure or error condition, and a `NotReady` in all others. A Success or Failure will terminate
+retries immediately whereas a NotReady will continue execution of the `server_ready` function
+until 300 seconds after the function was first called.
+
+If our new server is not ready after 300 seconds, `server_ready` will return a `NotReady` object.
+
+::
+
+   from highlyvariable import create_instance, get_instance_status
+   from smonad.retry import retry_decorator, NotReady
+
+   def make_server(name):
+       create_instance(name)
+       
+   
+   @retry_decorator(timeout=300)
+   def server_ready(name):
+       status = get_instance_status(name)
+       if status == 'Ready':
+           return Success("Instance %s is ready!")
+       elif status == 'Failed':
+           return Failure("Creation of %s failed after {total_time}! I want my money back!")
+       else:
+           return NotReady("Not ready yet after {total_time}")
+
+   make_server('jenkins')
+   result = server_ready('jenkins')
+
 
 Composing Functions
 --------------------------

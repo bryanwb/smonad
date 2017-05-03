@@ -1,5 +1,5 @@
 Welcome to smonad's documentation!
-=================================
+==================================
 
 Contents:
 
