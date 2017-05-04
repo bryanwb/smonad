@@ -107,6 +107,10 @@ def print_start_message(start_message, start_time):
 def print_end_message(result, total_time, retry_count):
     sys.stdout.write('\n')
     sys.stdout.flush()
+
+    if not hasattr(result.value, 'format'):
+        return
+
     if succeeded(result):
         print_now(result.value.format(total_time=total_time, retries=retry_count))
     elif isinstance(result, NotReady):
