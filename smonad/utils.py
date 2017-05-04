@@ -18,7 +18,7 @@ def succeeded(obj):
     False
     """
     # import inside the function to avoid circular module dependencies
-    from smonad.types.ftry import Try, Success
+    from .types.ftry import Try, Success
     assert isinstance(obj, Try)
     return isinstance(obj, Success)
 
@@ -33,7 +33,7 @@ def failed(obj):
     False
     """
     # import inside the function to avoid circular module dependencies
-    from smonad.types.ftry import Try, Failure
+    from .types.ftry import Try, Failure
     assert isinstance(obj, Try)
     return isinstance(obj, Failure)
 
