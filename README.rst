@@ -2,6 +2,8 @@
 smonad - a functional python package with some scala inspiration
 ======================================================================
 
+This package is deprecated! Use `tryme <https://pypi.python.org/pypi/tryme>`_ instead
+
 
 Introduction
 ============
